@@ -1,0 +1,23 @@
+.group_layout {
+  border: 1px solid;
+  padding: 10px;
+
+  &_title {
+    font-size: 16px;
+  }
+
+  &_label {
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
+  &_input {
+    padding: 10px;
+    border: 1px solid #b1abab;
+    border-radius: 5px;
+    margin-top: 7px;
+  }
+}
