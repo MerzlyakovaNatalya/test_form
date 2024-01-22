@@ -1,0 +1,45 @@
+{
+  "id": 1,
+  "sum": 0,
+  "subGroups": [
+    {
+      "id": 2,
+      "sum": 0,
+      "products": [
+        {
+          "id": 3,
+          "name": "Продукт",
+          "sum": 0,
+          "count": 0,
+          "price": 0
+        },
+        {
+          "id": 4,
+          "name": "Продукт",
+          "sum": 0,
+          "count": 0,
+          "price": 0
+        }
+      ]
+    }, {
+      "id": 4,
+      "sum": 0,
+      "products": [
+        {
+          "id": 5,
+          "name": "Продукт",
+          "sum": 0,
+          "count": 0,
+          "price": 0
+        },
+        {
+          "id": 6,
+          "name": "Продукт",
+          "sum": 0,
+          "count": 0,
+          "price": 0
+        }
+      ]
+    }
+  ]
+}

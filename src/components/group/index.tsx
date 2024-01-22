@@ -4,8 +4,16 @@ import Button from '../button'
 import style from './styles.module.scss'
 
 const GroupLayout: FC<IGroupLayout> = (props) => {
+  const border =
+    props.title === 'Группа' ? { border: 0 } : { border: '1px solid' }
 
-  const border = props.title === 'Группа' ? {border: 0} : {border: '1px solid'}
+  const handleClickButton = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (props.idSubGroup) {
+      props.onClickButton(event, props.idGroup, props.idSubGroup)
+    } else {
+      props.onClickButton(event, props.idGroup)
+    }
+  }
   return (
     <>
       <div className={style.group_layout} style={border}>
@@ -19,7 +27,12 @@ const GroupLayout: FC<IGroupLayout> = (props) => {
             readOnly
           />
         </label>
-        <Button onClick={() => {}} label={props.textButton} />
+        <Button
+          onClick={(event) => {
+            handleClickButton(event)
+          }}
+          label={props.textButton}
+        />
         {props.children}
       </div>
     </>
