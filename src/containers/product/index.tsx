@@ -1,19 +1,20 @@
-import { FC, useCallback, useState, useLayoutEffect } from 'react'
-import { IProduct } from '../../types'
+import { FC, useCallback, useState, useLayoutEffect, useEffect } from 'react'
+import { IProduct } from './types'
 import ProductLayout from '../../components/product_layout'
 import debounce from 'debounce'
-import { productSlice } from '../../store/reducers/productSlice'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
+import { formSlice } from '../../store/reducers/formSlice'
 import SideLayout from '../../chared/side-layout'
 import Button from '../../components/button'
 
 const Product: FC<IProduct> = (props) => {
+  const {idGroup, idSubGroup, id} = props
   const [valueName, setValueName] = useState(props.name)
   const [valueCount, setValueCount] = useState(props.count)
   const [valuePrice, setValuePrice] = useState(props.price)
   const dispatch = useAppDispatch()
 
-  const { changeValueProduct, removeProduct } = productSlice.actions
+  const { removeProduct, changeValueProduct, recalculationAmount } = formSlice.actions
 
   const labelsProduct = ['name', 'price', 'count', 'sum']
 
@@ -24,6 +25,8 @@ const Product: FC<IProduct> = (props) => {
           id: props.id,
           name: label,
           value: event,
+          idGroup: props.idGroup, 
+          idSubGroup: props.idSubGroup
         })
       )
       dispatch(
@@ -31,6 +34,8 @@ const Product: FC<IProduct> = (props) => {
           id: props.id,
           name: 'sum',
           value: '',
+          idGroup: props.idGroup, 
+          idSubGroup: props.idSubGroup
         })
       )
     }, 600),
@@ -91,8 +96,10 @@ const Product: FC<IProduct> = (props) => {
     }
   }
 
-  const onRemoveProduct = (id: string | number) => {
-    dispatch(removeProduct(id))
+  const handleRemoveProduct = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    dispatch(removeProduct({idGroup, idSubGroup, id}))
+    dispatch(recalculationAmount())
   }
 
   useLayoutEffect(() => {
@@ -100,6 +107,10 @@ const Product: FC<IProduct> = (props) => {
     setValueCount(props.count)
     setValuePrice(props.price)
   }, [props.name])
+
+  useEffect(() => {
+    dispatch(recalculationAmount())
+  }, [props.sum])
 
   return (
     <>
@@ -114,7 +125,7 @@ const Product: FC<IProduct> = (props) => {
             label={item}
           />
         ))}
-        <Button onClick={() => onRemoveProduct(props.id)} label="Удалить" />
+        <Button onClick={(event) => handleRemoveProduct(event)} label="Удалить" />
       </SideLayout>
     </>
   )

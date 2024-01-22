@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 
 export interface IFormLayout {
-    onSubmit: () => void
+    onSubmit: (event: React.FormEvent<HTMLFormElement>) => void
     children: ReactNode
+    total: number
   }
